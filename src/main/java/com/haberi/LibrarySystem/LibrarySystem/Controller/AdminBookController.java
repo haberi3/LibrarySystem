@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/admin/book/")
+@RequestMapping("/admin/book")
 public class AdminBookController {
 
     private final AdminBookServiceImpl bookService;
@@ -22,14 +22,14 @@ public class AdminBookController {
         this.writerService = writerService;
     }
 
-    @PostMapping("save")
+    @PostMapping("/save")
     public ResponseEntity<Book> saveBook(@Valid @RequestBody Book book){
         Book savedBook = bookService.saveBook(book);
-        return new ResponseEntity<Book>(savedBook, HttpStatus.CREATED);
+        return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
     }
 
-    @GetMapping("get")
-    public Book getBook(long id){
+    @GetMapping("/get/{id}")
+    public Book getBook(@PathVariable("id") long id){
         return bookService.findBookById(id);
     }
 

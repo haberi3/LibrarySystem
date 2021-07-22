@@ -19,7 +19,11 @@ public class AdminBookServiceImpl implements AdminBookService {
 
 
     public Book saveBook(Book book){
-        return bookRepository.save(book);
+        if(bookRepository.findByIsbnNumber(book.getIsbnNumber()) == null) {
+            return bookRepository.save(book);
+        }else {
+            throw new IllegalArgumentException("The book with the ISBN number of: " + book.getIsbnNumber() + " is already exists.");
+        }
     }
 
     public Book findBookById(long id){

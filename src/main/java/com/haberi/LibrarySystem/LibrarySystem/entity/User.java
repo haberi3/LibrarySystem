@@ -3,10 +3,11 @@ package com.haberi.LibrarySystem.LibrarySystem.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -19,19 +20,21 @@ public class User {
     private Long userId;
 
     @Column(name = "email", nullable = false, unique = true)
+    @Email(message = "Please provide a valid email address")
     private String email;
 
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "user_name", unique = true)
+    @NotBlank(message = "The username must be at least 1 character long")
+    private String username;
 
-    @Column(name = "membership_number")
+    @Column(name = "membership_number", nullable = false)
     private String membershipNumber;
 
     @Column(name = "is_membership_active")
-    private Boolean isMembershipActive;
+    private Boolean isMembershipActive = false;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
